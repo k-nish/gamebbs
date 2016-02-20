@@ -48,7 +48,7 @@ $pass = $rec['toukou'];
               mysqli_real_escape_string($db,$_POST['id']));
           $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
           $id=$_POST['id'];
-          header('Location: kekka.php?id='.$id);
+          header('Location: http://ut-sunfriend.com/gamebbs/kekka.php?id='.$id);
       }elseif(mb_convert_kana($_POST['key'],'r','UTF-8') !=$pass){
           $error['key'] = 'wrong';
           $id=$_POST['id'];
@@ -103,20 +103,20 @@ $pass = $rec['toukou'];
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="bbs.php"><span class="strong-title"><i class="fa fa-sun-o"></i>
+              <a class="navbar-brand" href="http://ut-sunfriend.com/gamebbs/bbs.php"><span class="strong-title"><i class="fa fa-sun-o"></i>
                 SunFriend!実況掲示板!<?php echo h($name); ?></span></a>
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
-                  <li class="hidden">
-                      <a href="#page-top"></a>
+                  <li class="page-scroll">
+                      <a href="http://ut-sunfriend.com">HPへ戻る</a>
                   </li>
                   <li class="page-scroll">
-                      <a href="bbs.php">実況掲示板TOPへ</a>
+                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php">実況掲示板TOPへ</a>
                   </li>
                   <li class="page-scroll">
-                      <a href="check.php">編集用ページへ</a>
+                      <a href="http://ut-sunfriend.com/gamebbs/check.php">編集用ページへ</a>
                   </li>
                   <!-- <li class="page-scroll">
                       <a href="#contact">Contact</a>
@@ -129,11 +129,11 @@ $pass = $rec['toukou'];
   </nav>
   <div class="container">
     <div class="row">
-      <div class="col-md-4 content-margin-top">
+      <div class="col-md-5 content-margin-top">
 
-    <form action="kekka.php?id=<?php echo h($id); ?>" method="post">
+    <form action="http://ut-sunfriend.com/gamebbs/kekka.php?id=<?php echo h($id); ?>" method="post">
       <div class="form-group">
-            <h5>学年(何か書いてね)</h5>
+            <h1>学年(何か書いてね)</h1>
             <div class="input-group">
               <?php if (isset($error['key'])&&($error['key']=='wrong')) { ?>
                 <input type="text" name="years" class="form-control"
@@ -147,7 +147,7 @@ $pass = $rec['toukou'];
 
       </div>
       <div class="form-group">
-            <h5>結果(何か入力してね)</h5>
+            <h1>結果(何か入力してね)</h1>
             <div class="input-group" data-validate="length" data-length="1">
               <?php if (isset($error['key'])&&($error['key']=='wrong')) { ?>
               <input type="text" class="form-control" name="result" id="validate-length"
@@ -159,7 +159,7 @@ $pass = $rec['toukou'];
             </div>
       </div>
       <div class="form-group">
-            <h5>投稿キー</h5>
+            <h1>投稿キー</h1>
             <div class="input-group">
               <input type="text" name="key" class="form-control"
                        id="validate-text" placeholder="今回もヒントは。。。。ないぜ" required>
@@ -170,19 +170,19 @@ $pass = $rec['toukou'];
             <p class="error">*正しい投稿キーを入れてください。</p>
             <?php } ?>
       </div>
-      <h5>実況投稿!</h5>
+      <!-- <h5>実況投稿!</h5> -->
       <input type="hidden" name="id" value=<?php echo h($id); ?>>
       <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>実況する!</button>
       <br>
       <br>
       <p>
       <?php if ($page<$maxpage){ ?>
-      <a href="kekka.php?page=<?php echo ($page + 1); ?>&id=<?php echo $id; ?>" class="btn btn-default">以前の投稿へ</a>
+      <a href="http://ut-sunfriend.com/gamebbs/kekka.php?page=<?php echo ($page + 1); ?>&id=<?php echo $id; ?>" class="btn btn-default">以前の投稿へ</a>
       <?php }else{ ?>
       最終ページだよ
       <?php } ?>
       <?php if ($page>1) { ?>
-      <a href="kekka.php?page=<?php echo ($page - 1); ?>&id=<?php echo $id; ?>" class="btn btn-default">最新の投稿へ</a>
+      <a href="http://ut-sunfriend.com/gamebbs/kekka.php?page=<?php echo ($page - 1); ?>&id=<?php echo $id; ?>" class="btn btn-default">最新の投稿へ</a>
       <?php }else{ ?>
       最新のページだよ
       <?php } ?>
@@ -191,7 +191,7 @@ $pass = $rec['toukou'];
 
       </div>
       <!--<h3>実況なう!</h3>-->
-      <div class="col-md-8 content-margin-top">
+      <div class="col-md-7 content-margin-top">
         <!--<h3>実況なう!</h3>-->
         <div class="timeline-centered">
         <?php
@@ -214,9 +214,9 @@ $pass = $rec['toukou'];
                           $date = date('Y/m/d',$date);
                       ?>
 
-                      <span><?php echo h($date);?></span>
+                      <span style="font-size:20px"><?php echo h($date);?></span>
                     </h2>
-                    <p><Font size="4"><strong><?php echo h($post['result']);?><strong></br></p>
+                    <p><strong><?php echo h($post['result']);?><strong></br></p>
             </div>
 
         </article>

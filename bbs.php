@@ -72,7 +72,7 @@ $start = max($start,0);
                          mysqli_real_escape_string($db,$gname),
                          mysqli_real_escape_string($db,$newid['gameid']));
                  $stmtt = mysqli_query($db,$sqls) or die(mysqli_error($db));
-                 header('Location: bbs.php');
+                 header('Location: http://ut-sunfriend.com/gamebbs/bbs.php');
             }
          }elseif($_POST['key']!=$pass){
              $error['key'] = 'wrong';
@@ -135,11 +135,14 @@ $start = max($start,0);
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="bbs.php"><span class="strong-title"><i class="fa fa-sun-o"></i> Sun Friend!実況掲示板!</span></a>
+              <a class="navbar-brand" href="http://ut-sunfriend.com/gamebbs/bbs.php"><span class="strong-title"><i class="fa fa-sun-o"></i> Sun Friend!実況掲示板!</span></a>
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
+                  <li class="page-scroll">
+                      <a href="http://ut-sunfriend.com">HPへ戻る</a>
+                  </li>
                   <li class="page-scroll">
                       <a href="bbs.php">実況掲示板TOPへ</a>
                   </li>
@@ -154,11 +157,11 @@ $start = max($start,0);
   </nav>
   <div class="container">
     <div class="row">
-      <div class="col-md-4 content-margin-top">
+      <div class="col-md-5 content-margin-top">
 
-    <form action="bbs.php" method="post">
+    <form action="http://ut-sunfriend.com/gamebbs/bbs.php" method="post">
       <div class="form-group">
-          <h5>試合名</h5>
+          <h1>試合名</h1>
             <div class="input-group">
               <?php if (isset($error['key'])&&$error['key']=='wrong'){ ?>
                 <input type="text" name="gamename" class="form-control"
@@ -172,7 +175,7 @@ $start = max($start,0);
 
       </div>
       <div class="form-group">
-              <h5>投稿キー</h5>
+              <h1>投稿キー</h1>
                   <div class="input-group" data-validate="length" data-length="3">
                   <input type="text" class="form-control" name="key" id="validate-length" placeholder="投稿キー  ヒントは...." required>
                   <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
@@ -191,12 +194,12 @@ $start = max($start,0);
       <br>
       <p>
       <?php if ($page<$maxpage){ ?>
-      <a href="bbs.php?page=<?php echo ($page + 1); ?>" class="btn btn-default">以前の投稿へ</a>
+      <a href="http://ut-sunfriend.com/gamebbs/bbs.php?page=<?php echo ($page + 1); ?>" class="btn btn-default">以前の投稿へ</a>
       <?php }else{ ?>
       最終ページだよ
       <?php } ?>
       <?php if ($page>1) { ?>
-      <a href="bbs.php?page=<?php echo ($page - 1); ?>" class="btn btn-default">最新の投稿へ</a>
+      <a href="http://ut-sunfriend.com/gamebbs/bbs.php?page=<?php echo ($page - 1); ?>" class="btn btn-default">最新の投稿へ</a>
       <?php }else{ ?>
       最新のページだよ
       <?php } ?>
@@ -206,14 +209,14 @@ $start = max($start,0);
 
       </div>
 
-      <div class="col-md-8 content-margin-top">
+      <div class="col-md-7 content-margin-top">
       <!--<p><strong>青のボタンを押すと各試合の実況が見れます!<strong></p>-->
         <div class="timeline-centered">
 
         <?php foreach($re as $po) { ?>
         <article class="timeline-entry">
             <div class="timeline-entry-inner">
-                <a href="kekka.php?id=<?php echo $po['gameid']; ?>">
+                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?id=<?php echo $po['gameid']; ?>">
                 <div class="timeline-icon bg-info">
                     <i class="entypo-feather"></i>
                     <i class="fa fa-play-circle"></i>
@@ -224,9 +227,9 @@ $start = max($start,0);
                     <?php foreach ($sun as $post) {
                     if($post['gameid'] == $po['gameid']){
                     if($post['gamename'] != ''){?>
-                    <?php echo h($post['gamename']); ?></a></br>
+                    <?php echo h($post['gamename']); ?></a>
                     <?php }else{ ?>
-                    <?php echo "この試合名は削除されました。" ?></a></br>
+                    <?php echo "この試合名は削除されました。" ?></a>
                     <?php }}} ?>
                       <?php
                           //一旦日時型に変換
@@ -234,9 +237,9 @@ $start = max($start,0);
                           //書式を変換
                           $gameday = date('Y/m/d',$gameday);
                       ?>
-                      <span><?php echo h($gameday);?></span>
-                      <a href="bbs.php?action=edit&id=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
-                      <p><a href="kekka.php?id=<?php echo h($po['gameid']); ?>">最新投稿:<Font size="3"><strong><?php echo h($po['result']); ?><strong></p>
+                      <span style="font-size:20px"><?php echo h($gameday);?></span>
+                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php?action=edit&id=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
+                      <p><a href="http://ut-sunfriend.com/gamebbs/kekka.php?id=<?php echo h($po['gameid']); ?>">最新投稿:<strong><?php echo h($po['result']); ?><strong></p>
                     </h2>
             </div>
 

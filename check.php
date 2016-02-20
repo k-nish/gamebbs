@@ -11,7 +11,7 @@ $pass = $rec['editpass'];
 
 if (isset($_POST)&&!empty($_POST)) {
     if (($_POST['id'] == $id )&&($_POST['pass'])==$pass) {
-      header('Location: edit.php');
+      header('Location: http://ut-sunfriend.com/gamebbs/edit.php');
     }
     if (($_POST['id']!= $id)&&($_POST['pass'] == $pass)) {
         $error['id'] = 'wrong';
@@ -49,7 +49,7 @@ if (isset($_POST)&&!empty($_POST)) {
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="check.php"><span class="strong-title"><i class="fa fa-sun-o"></i> 管理者ログインページ</span></a>
+              <a class="navbar-brand" href="http://ut-sunfriend.com/gamebbs/check.php"><span class="strong-title"><i class="fa fa-sun-o"></i> 管理者ログインページ</span></a>
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -58,10 +58,13 @@ if (isset($_POST)&&!empty($_POST)) {
                       <a href="bbs.php">実況掲示板TOPへ</a>
                   </li> -->
                   <li class="page-scroll">
-                      <a href="index.php">実況掲示板TOPへ</a>
+                      <a href="http://ut-sunfriend.com">HPへ戻る</a>
                   </li>
                   <li class="page-scroll">
-                      <a href="check.php">編集用ページ</a>
+                      <a href="http://ut-sunfriend.com/gamebbs/index.php">実況掲示板TOPへ</a>
+                  </li>
+                  <li class="page-scroll">
+                      <a href="http://ut-sunfriend.com/gamebbs/check.php">編集用ページ</a>
                   </li>
                   <!-- <li class="page-scroll">
                       <a href="#contact">Contact</a>
@@ -74,11 +77,11 @@ if (isset($_POST)&&!empty($_POST)) {
   </nav>
   <div class="container">
     <div class="row">
-      <div class="col-md-4 content-margin-top">
+      <div class="col-md-5 content-margin-top">
 
-    <form action="check.php" method="post">
+    <form action="http://ut-sunfriend.com/gamebbs/check.php" method="post">
       <div class="form-group">
-          <h5>ID</h5>
+          <h1>ID</h1>
             <div class="input-group">
               <?php if (isset($error['pass'])&&$error['pass']=='wrong') { ?>
               <input type="text" name="id" class="form-control"
@@ -94,18 +97,18 @@ if (isset($_POST)&&!empty($_POST)) {
             <?php endif; ?>
       </div>
       <div class="form-group">
-              <h5>Password</h5>
+              <h1>Password</h1>
                   <div class="input-group" data-validate="length" data-length="3">
                   <input type="text" class="form-control" name="pass" id="validate-length" placeholder="当ててみろ!" required>
                   <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
                   </div>
       </div>
-      <button type="submit" href="edit.php" class="btn btn-danger col-xs-12" disabled>ログイン</button>
+      <button type="submit" href="http://ut-sunfriend.com/gamebbs/edit.php" class="btn btn-danger col-xs-12" disabled>ログイン</button>
     </form>
 
       </div>
 
-      <div class="col-md-8 content-margin-top">
+      <div class="col-md-7 content-margin-top">
 
         <div class="timeline-centered">
 

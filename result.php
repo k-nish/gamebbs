@@ -21,7 +21,7 @@ try{
       $sql=sprintf('DELETE FROM `results` WHERE `id`="%d"',
            mysqli_real_escape_string($db,$id));
       $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-      header('Location: $result.php?id='.$id);
+      header('Location: http://ut-sunfriend.com/gamebbs/result.php?id='.$id);
   }
 
   // $error = array();
@@ -80,7 +80,7 @@ try{
   <script type="text/javascript">
   function destroy(id){
     if (confirm('削除しますか')) {
-      location.href = 'result.php?action=delete&id='+id;
+      location.href = 'http://ut-sunfriend.com/gamebbs/result.php?action=delete&id='+id;
       return true;
     }else{
       return false;
@@ -99,19 +99,19 @@ try{
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="edit.php"><span class="strong-title"><i class="fa fa-sun-o"></i>管理用ホームページ<?php echo h($name); ?></span></a>
+              <a class="navbar-brand" href="http://ut-sunfriend.com/gamebbs/edit.php"><span class="strong-title"><i class="fa fa-sun-o"></i>管理用ホームページ<?php echo h($name); ?></span></a>
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
-                  <li class="hidden">
-                      <a href="#page-top"></a>
+                  <li class="page-scroll">
+                      <a href="http://ut-sunfriend.com">HPへ戻る</a>
                   </li>
                   <li class="page-scroll">
-                      <a href="bbs.php">実況掲示板TOPへ</a>
+                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php">実況掲示板TOPへ</a>
                   </li>
                   <li class="page-scroll">
-                      <a href="edit.php">編集用ページへ</a>
+                      <a href="http://ut-sunfriend.com/gamebbs/edit.php">編集用ページへ</a>
                   </li>
                   <!-- <li class="page-scroll">
                       <a href="#contact">Contact</a>
@@ -124,7 +124,7 @@ try{
   </nav>
   <div class="container">
     <div class="row">
-      <div class="col-md-4 content-margin-top">
+      <div class="col-md-5 content-margin-top">
 
     <!-- <form action="result.php&id=<?php echo h($id); ?>" method="post">
       <div class="form-group">
@@ -160,7 +160,7 @@ try{
     </form> -->
 
       </div>
-      <div class="col-md-8 content-margin-top">
+      <div class="col-md-7 content-margin-top">
         <div class="timeline-centered">
         <?php
         foreach ($posts as $post) { ?>
@@ -184,9 +184,9 @@ try{
                           $date = date('Y/m/d',$date);
                       ?>
 
-                      <span><?php echo h($date);?></span>
+                      <span style="font-size:20px"><?php echo h($date);?></span>
                     </h2>
-                    <p><Font size="4"><strong><?php echo h($post['result']);?><strong></br>
+                    <p><strong><?php echo h($post['result']);?><strong></br>
                       <a href="#" onclick="destroy(<?php echo h($post['id']); ?>)"><i class="fa fa-trash-o"></i></a>
                     </p>
 

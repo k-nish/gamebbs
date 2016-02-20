@@ -49,7 +49,7 @@ if (isset($_GET['action'])&&($_GET['action'] == 'delete')) {
     $sql = sprintf('DELETE FROM `names` WHERE `gameid`=%d',
               mysqli_real_escape_string($db,$_GET['id']));
     $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-    header('Location: edit.php');
+    header('Location: http://ut-sunfriend.com/gamebbs/edit.php');
 }
 
 $error = array();
@@ -120,7 +120,7 @@ if(isset($_POST)&&!empty($_POST)){
   <script type="text/javascript">
   function destroy(gameid){
     if (confirm('削除しますか')) {
-      location.href = 'edit.php?action=delete&id='+gameid;
+      location.href = 'http://ut-sunfriend.com/gamebbs/edit.php?action=delete&id='+gameid;
       return true;
     }else{
       return false;
@@ -140,7 +140,7 @@ if(isset($_POST)&&!empty($_POST)){
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="edit.php"><span class="strong-title"><i class="fa fa-sun-o"></i> 実況掲示板管理人編集ページ</span></a>
+              <a class="navbar-brand" href="http://ut-sunfriend.com/gamebbs/edit.php"><span class="strong-title"><i class="fa fa-sun-o"></i> 実況掲示板管理人編集ページ</span></a>
           </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -149,10 +149,13 @@ if(isset($_POST)&&!empty($_POST)){
                       <a href="bbs.php">実況掲示板TOPへ</a>
                   </li> -->
                   <li class="page-scroll">
-                      <a href="bbs.php">実況掲示板TOPへ</a>
+                      <a href="http://ut-sunfriend.com">HPへ戻る</a>
                   </li>
                   <li class="page-scroll">
-                      <a href="check.php">編集用ページ</a>
+                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php">実況掲示板TOPへ</a>
+                  </li>
+                  <li class="page-scroll">
+                      <a href="http://ut-sunfriend.com/gamebbs/check.php">編集用ページ</a>
                   </li>
                   <!-- <li class="page-scroll">
                       <a href="#contact">Contact</a>
@@ -165,11 +168,11 @@ if(isset($_POST)&&!empty($_POST)){
   </nav>
   <div class="container">
     <div class="row">
-      <div class="col-md-4 content-margin-top">
+      <div class="col-md-5 content-margin-top">
 
-    <form action="edit.php" method="post">
+    <form action="http://ut-sunfriend.com/gamebbs/edit.php" method="post">
       <div class="form-group">
-          <h5>試合名</h5>
+          <h1>試合名</h1>
             <div class="input-group">
               <?php if (isset($error['key'])&&($error['key']=='wrong')) { ?>
               <input type="text" name="gamename" class="form-control"
@@ -182,7 +185,7 @@ if(isset($_POST)&&!empty($_POST)){
             </div>
       </div>
       <div class="form-group">
-              <h5>投稿キー</h5>
+              <h1>投稿キー</h1>
                   <div class="input-group" data-validate="length" data-length="3">
                   <input type="text" class="form-control" name="key" id="validate-length" placeholder="投稿キー  ヒントは...." required></textarea>
                   <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
@@ -199,12 +202,12 @@ if(isset($_POST)&&!empty($_POST)){
       <br>
       <p>
       <?php if ($page<$maxpage){ ?>
-      <a href="edit.php?page=<?php echo ($page + 1); ?>" class="btn btn-default">以前の投稿へ</a>
+      <a href="http://ut-sunfriend.com/gamebbs/edit.php?page=<?php echo ($page + 1); ?>" class="btn btn-default">以前の投稿へ</a>
       <?php }else{ ?>
       最終ページだよ
       <?php } ?>
       <?php if ($page>1) { ?>
-      <a href="edit.php?page=<?php echo ($page - 1); ?>" class="btn btn-default">最新の投稿へ</a>
+      <a href="http://ut-sunfriend.com/gamebbs/edit.php?page=<?php echo ($page - 1); ?>" class="btn btn-default">最新の投稿へ</a>
       <?php }else{ ?>
       最新のページだよ
       <?php } ?>
@@ -213,21 +216,21 @@ if(isset($_POST)&&!empty($_POST)){
 
       </div>
 
-      <div class="col-md-8 content-margin-top">
+      <div class="col-md-7 content-margin-top">
 
         <div class="timeline-centered">
 
         <?php foreach($re as $po) { ?>
         <article class="timeline-entry">
             <div class="timeline-entry-inner">
-                <a href="result.php?id=<?php echo $po['gameid']; ?>">
+                <a href="http://ut-sunfriend.com/gamebbs/result.php?id=<?php echo $po['gameid']; ?>">
                 <div class="timeline-icon bg-info">
                     <i class="entypo-feather"></i>
                     <i class="fa fa-play-circle"></i>
                 </div>
 
                 <div class="timeline-label">
-                    <h2><a href="result.php?id=<?php echo h($po['gameid']); ?>">
+                    <h2><a href="http://ut-sunfriend.com/gamebbs/result.php?id=<?php echo h($po['gameid']); ?>">
                     <?php foreach ($sun as $post) {
                     if($post['gameid'] == $po['gameid']){
                     if($post['gamename'] != ''){?>
@@ -241,10 +244,10 @@ if(isset($_POST)&&!empty($_POST)){
                           //書式を変換
                           $gameday = date('Y/m/d',$gameday);
                       ?>
-                      <span><?php echo h($gameday);?></span>
-                      <a href="bbs.php?action=edit&id=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
+                      <span style="font-size:20px"><?php echo h($gameday);?></span>
+                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php?action=edit&id=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
                       <a href="#" onclick="destroy(<?php echo h($post['gameid']);?>)"><i class="fa fa-trash-o"></i></a>
-                      <p><a href="kekka.php?id=<?php echo h($po['gameid']); ?>">最新投稿:<Font size="3"><strong><?php echo h($po['result']); ?><strong></p>
+                      <p><a href="http://ut-sunfriend.com/gamebbs/kekka.php?id=<?php echo h($po['gameid']); ?>">最新投稿:<strong><?php echo h($po['result']); ?><strong></p>
                     </h2>
             </div>
 
