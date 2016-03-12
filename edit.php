@@ -11,10 +11,11 @@ try{
   return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
  }
 
-$sql = 'SELECT * FROM `secret` WHERE 1';
-$stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-$rec = mysqli_fetch_assoc($stmt);
-$pass = $rec['toukou'];
+//投稿キーを取得
+// $sql = 'SELECT * FROM `secret` WHERE 1';
+// $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+// $rec = mysqli_fetch_assoc($stmt);
+// $pass = $rec['toukou'];
 
  //ページング実装
 $page='';
@@ -54,8 +55,8 @@ if (isset($_GET['action'])&&($_GET['action'] == 'delete')) {
 
 $error = array();
 if(isset($_POST)&&!empty($_POST)){
-    if(isset($_POST['key']) && !empty($_POST['key'])){
-        if (mb_convert_kana($_POST['key'],'r','UTF-8')==$pass) {
+    // if(isset($_POST['key']) && !empty($_POST['key'])){
+    //     if (mb_convert_kana($_POST['key'],'r','UTF-8')==$pass) {
             if(isset($_POST['update'])){
                 $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
                 $sql = sprintf('UPDATE `names` SET `gamename`=%s,gameday=now() WHERE `gameid`=%d',
@@ -69,10 +70,10 @@ if(isset($_POST)&&!empty($_POST)){
             //     $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
             //     header('Location: bbs.php');
             }
-        }elseif(mb_convert_kana($_POST['key'],'r','UTF-8') != $pass){
-            $error['key'] = 'wrong';
-        }
-    }
+    //     }elseif(mb_convert_kana($_POST['key'],'r','UTF-8') != $pass){
+    //         $error['key'] = 'wrong';
+    //     }
+    // }
 }
 
   $sun = array();
@@ -184,7 +185,7 @@ if(isset($_POST)&&!empty($_POST)){
               <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
             </div>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
               <h1>投稿キー</h1>
                   <div class="input-group" data-validate="length" data-length="3">
                   <input type="text" class="form-control" name="key" id="validate-length" placeholder="投稿キー  ヒントは...." required></textarea>
@@ -193,7 +194,7 @@ if(isset($_POST)&&!empty($_POST)){
                   <?php if (isset($error['key'])&&($error['key']=='wrong')) { ?>
                   <p class="error">*正しい投稿キーを入力してください。</p>
                   <?php } ?>
-      </div>
+      </div> -->
       <?php if(isset($_GET['action'])){ ?>
       <input type='hidden' name='id' value='<?php echo "$id";?>'>
       <button type="submit"  name='update' class="btn btn-danger col-xs-12" disabled>書き直す</button>

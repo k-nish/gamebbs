@@ -2,18 +2,19 @@
 try{
  require('db.php');
 
- $id = '';
- $name = '';
- $day = '';
- $key = '';
- $error = array();
+$id = '';
+$name = '';
+$day = '';
+$key = '';
+$error = array();
 
-$sql = 'SELECT * FROM `secret` WHERE 1';
-$stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-$rec = mysqli_fetch_assoc($stmt);
-$pass = $rec['toukou'];
+//投稿キーを取得
+// $sql = 'SELECT * FROM `secret` WHERE 1';
+// $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+// $rec = mysqli_fetch_assoc($stmt);
+// $pass = $rec['toukou'];
 
- function h($value){
+function h($value){
     return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
 }
 //ページング実装
@@ -36,9 +37,9 @@ $start = ($page - 1)*6;
 $start = max($start,0);
 
  //編集するための編集元の情報を表示
- if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
-     $sql = sprintf('SELECT * FROM `names` WHERE gameid=%d',
-          mysqli_real_escape_string($db,$_GET['id']));
+if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
+    $sql = sprintf('SELECT * FROM `names` WHERE gameid=%d',
+            mysqli_real_escape_string($db,$_GET['id']));
      $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
      $rec = mysqli_fetch_assoc($stmt);
      $id = $rec['gameid'];
@@ -47,67 +48,66 @@ $start = max($start,0);
  }
 
  //投稿をinsert or 編集を記録
- if(isset($_POST)&&!empty($_POST)){
-     if(isset($_POST['key']) && !empty($_POST['key'])){
-         if (mb_convert_kana($_POST['key'],'r','UTF-8')==$pass) {
-             if(isset($_POST['update'])){
-                 $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
-                 $sql = sprintf('UPDATE `names` SET `gamename`="%s",gameday=now() WHERE `gameid`="%d"',
-                     mysqli_real_escape_string($db,$gname),
-                     mysqli_real_escape_string($db,$_POST['id']));
-                 $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+if(isset($_POST)&&!empty($_POST)){
+    // if(isset($_POST['key']) && !empty($_POST['key'])){
+    //     if (mb_convert_kana($_POST['key'],'r','UTF-8')==$pass) {
+            if(isset($_POST['update'])){
+                $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
+                $sql = sprintf('UPDATE `names` SET `gamename`="%s",gameday=now() WHERE `gameid`="%d"',
+                        mysqli_real_escape_string($db,$gname),
+                        mysqli_real_escape_string($db,$_POST['id']));
+                $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
             }elseif(isset($_POST['gamename'])) {
                  //試合名の登録
-                 $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
-                 $sql = sprintf('INSERT INTO `names`(`gamename`, `gameday`) VALUES ("%s",now())',
-                     mysqli_real_escape_string($db,$gname));
-                 $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-                 //gameidの取得
-                 $newid = array();
-                 $sq = 'SELECT `gameid` FROM `names` WHERE 1 ORDER BY `gameday` DESC LIMIT 1';
-                 $stm = mysqli_query($db,$sq) or die(mysqli_error($db));
-                 $newid = mysqli_fetch_assoc($stm);
-                 //最初の投稿を登録
-                 $sqls = sprintf('INSERT INTO `results`SET `result`="%sの実況はじめます!", `years`="sunfriend", `date`=now(), `gameid`=%d',
-                         mysqli_real_escape_string($db,$gname),
-                         mysqli_real_escape_string($db,$newid['gameid']));
-                 $stmtt = mysqli_query($db,$sqls) or die(mysqli_error($db));
-                 header('Location: http://ut-sunfriend.com/gamebbs/bbs.php');
+                $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
+                $sql = sprintf('INSERT INTO `names`(`gamename`, `gameday`) VALUES ("%s",now())',
+                        mysqli_real_escape_string($db,$gname));
+                $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+                //gameidの取得
+                $newid = array();
+                $sq = 'SELECT `gameid` FROM `names` WHERE 1 ORDER BY `gameday` DESC LIMIT 1';
+                $stm = mysqli_query($db,$sq) or die(mysqli_error($db));
+                $newid = mysqli_fetch_assoc($stm);
+                //最初の投稿を登録
+                $sqls = sprintf('INSERT INTO `results`SET `result`="%sの実況はじめます!", `years`="sunfriend", `date`=now(), `gameid`=%d',
+                            mysqli_real_escape_string($db,$gname),
+                            mysqli_real_escape_string($db,$newid['gameid']));
+                $stmtt = mysqli_query($db,$sqls) or die(mysqli_error($db));
+                header('Location: http://ut-sunfriend.com/gamebbs/bbs.php');
             }
-         }elseif($_POST['key']!=$pass){
-             $error['key'] = 'wrong';
-         }
-      }
-  }
+        // }elseif($_POST['key']!=$pass){
+        //      $error['key'] = 'wrong';
+        // }
+    // }
+}
 
-  //試合名を取得
-  $sun = array();
-  $sql = 'SELECT * FROM `names` WHERE 1 ORDER BY `gameid` DESC';
-  $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-    while (1) {
-      $rec = mysqli_fetch_assoc($stmt);
-      if ($rec == false) {
-          break;
-      }
-       $sun[] = $rec;
-    }
+//試合名を取得
+$sun = array();
+$sql = 'SELECT * FROM `names` WHERE 1 ORDER BY `gameid` DESC';
+$stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+while (1) {
+    $rec = mysqli_fetch_assoc($stmt);
+if ($rec == false) {
+    break;
+}
+    $sun[] = $rec;
+}
 
-  //最新投稿を取得
-  $re = array();
-  $sq = sprintf('SELECT `g1`.`result`,`g1`.`date`,`g1`.`gameid` FROM `results` as `g1`
-         WHERE `g1`.`date`=(SELECT MAX(`g2`.`date`) FROM `results` as `g2` WHERE `g2`.`gameid` = `g1`.`gameid`) ORDER BY `date` DESC LIMIT %d,6',$start);
-  $stmt = mysqli_query($db,$sq) or die(mysqli_error($db));
-  while (1) {
+//最新投稿を取得
+$re = array();
+$sq = sprintf('SELECT `g1`.`result`,`g1`.`date`,`g1`.`gameid` FROM `results` as `g1`
+            WHERE `g1`.`date`=(SELECT MAX(`g2`.`date`) FROM `results` as `g2` WHERE `g2`.`gameid` = `g1`.`gameid`) ORDER BY `date` DESC LIMIT %d,6',$start);
+$stmt = mysqli_query($db,$sq) or die(mysqli_error($db));
+while (1) {
     $req = mysqli_fetch_assoc($stmt);
-    if ($req == false) {
-        break;
-    }
+if ($req == false) {
+    break;
+}
     $re[] =$req;
-  }
+}
 
-  $dbh = null;
-
-  ?>
+$dbh = null;
+?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -174,16 +174,16 @@ $start = max($start,0);
             </div>
 
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
               <h1>投稿キー</h1>
                   <div class="input-group" data-validate="length" data-length="3">
                   <input type="text" class="form-control" name="key" id="validate-length" placeholder="投稿キー  ヒントは...." required>
                   <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
                   </div>
-                  <?php if(isset($error['key'])&&$error['key']=='wrong'){ ?>
+                  // <?php if(isset($error['key'])&&$error['key']=='wrong'){ ?>
                   <p class="error">*正しい投稿キーを入れてください。</p>
                   <?php } ?>
-      </div>
+      </div> -->
       <?php if($name==''){ ?>
       <button type="submit"  class="btn btn-danger col-xs-12" disabled>投稿する</button>
       <?php }elseif($name != ''){?>

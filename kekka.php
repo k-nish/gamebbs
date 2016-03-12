@@ -6,10 +6,11 @@ try{
     return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
 }
 
-$sql = 'SELECT * FROM `secret` WHERE 1';
-$stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-$rec = mysqli_fetch_assoc($stmt);
-$pass = $rec['toukou'];
+//投稿キーを取得
+// $sql = 'SELECT * FROM `secret` WHERE 1';
+// $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+// $rec = mysqli_fetch_assoc($stmt);
+// $pass = $rec['toukou'];
 
 
   $id ='';
@@ -38,7 +39,7 @@ $pass = $rec['toukou'];
 
   $error = array();
   if(isset($_POST) && !empty($_POST)){
-      if(mb_convert_kana($_POST['key'],'r','UTF-8')==$pass){
+      // if(mb_convert_kana($_POST['key'],'r','UTF-8')==$pass){
           $kresult = mb_convert_kana($_POST['result'],'sa','UTF-8');
           $kyears = mb_convert_kana($_POST['years'],'sa','UTF-8');
           $sql = sprintf('INSERT INTO `results`(`id`, `result`, `years`, `date`, `gameid`)
@@ -49,10 +50,10 @@ $pass = $rec['toukou'];
           $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
           $id=$_POST['id'];
           header('Location: http://ut-sunfriend.com/gamebbs/kekka.php?id='.$id);
-      }elseif(mb_convert_kana($_POST['key'],'r','UTF-8') !=$pass){
-          $error['key'] = 'wrong';
-          $id=$_POST['id'];
-      }
+      // }elseif(mb_convert_kana($_POST['key'],'r','UTF-8') !=$pass){
+      //     $error['key'] = 'wrong';
+      //     $id=$_POST['id'];
+      // }
   }
 
   $sql = sprintf('SELECT * FROM `results` WHERE gameid = "%d" ORDER BY `id` DESC LIMIT %d,6',
@@ -158,7 +159,7 @@ $pass = $rec['toukou'];
               <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
             </div>
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
             <h1>投稿キー</h1>
             <div class="input-group">
               <input type="text" name="key" class="form-control"
@@ -169,7 +170,7 @@ $pass = $rec['toukou'];
             <?php if(isset($error['key'])&&$error['key']=='wrong'){ ?>
             <p class="error">*正しい投稿キーを入れてください。</p>
             <?php } ?>
-      </div>
+      </div> -->
       <!-- <h5>実況投稿!</h5> -->
       <input type="hidden" name="id" value=<?php echo h($id); ?>>
       <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>実況する!</button>
