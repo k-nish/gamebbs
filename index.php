@@ -26,6 +26,8 @@ if (isset($_POST['id'])&&$_POST['id']=='') {
 if (isset($_POST['pass'])&&$_POST['pass']=='') {
     $error['pass'] = 'blank';
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +83,7 @@ if (isset($_POST['pass'])&&$_POST['pass']=='') {
     <div class="row">
       <div class="col-md-5 content-margin-top">
 
-    <form action="http://ut-sunfriend.com/gamebbs/bbs.php" method="post">
+    <form action="http://ut-sunfriend.com/gamebbs/index.php" method="post">
       <div class="form-group">
           <h1>ID</h1>
             <div class="input-group">
@@ -96,7 +98,7 @@ if (isset($_POST['pass'])&&$_POST['pass']=='') {
       <div class="form-group">
               <h1>Password</h1>
                   <div class="input-group" data-validate="length" data-length="3">
-                  <input type="text" class="form-control" name="pass" id="validate-length" placeholder="当ててみろ!" required>
+                  <input type="text" class="form-control" name="pass" id="validate-length" placeholder="password" required>
                   <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
                   </div>
       </div>
