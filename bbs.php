@@ -1,6 +1,6 @@
 <?php
 try{
- require('db.php');
+require('db.php');
 
 $id = '';
 $name = '';
@@ -51,13 +51,14 @@ if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
 if(isset($_POST)&&!empty($_POST)){
     // if(isset($_POST['key']) && !empty($_POST['key'])){
     //     if (mb_convert_kana($_POST['key'],'r','UTF-8')==$pass) {
-            if(isset($_POST['update'])){
+            if(isset($_POST['update'])&&!empty($_POST['gamename'])){
                 $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
                 $sql = sprintf('UPDATE `names` SET `gamename`="%s",gameday=now() WHERE `gameid`="%d"',
                         mysqli_real_escape_string($db,$gname),
                         mysqli_real_escape_string($db,$_POST['id']));
                 $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-            }elseif(isset($_POST['gamename'])) {
+
+            }elseif(isset($_POST['gamename'])&&!empty($_POST['gamename'])) {
                  //試合名の登録
                 $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
                 $sql = sprintf('INSERT INTO `names`(`gamename`, `gameday`) VALUES ("%s",now())',
