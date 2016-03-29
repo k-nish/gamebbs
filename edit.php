@@ -1,15 +1,28 @@
 <?php
 try{
- require('db.php');
+session_start();
+require('db.php');
 
- $id = '';
- $name = '';
- $day = '';
- $key = '';
+//ログインチェック用のid,passを取得
+$sql = 'SELECT * FROM `secret` WHERE 1';
+$stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+$rec = mysqli_fetch_assoc($stmt);
+$editid = $rec['editid'];
+$editpass = $rec['editpass'];
 
- function h($value){
-  return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
- }
+//ログインチェック
+if ($_SESSION['editid'] != $editid || $_SESSION['editpass'] != $editpass) {
+  header('Location: http://ut-sunfriend.com/gamebbs/check.php');
+}
+
+$id = '';
+$name = '';
+$day = '';
+$key = '';
+
+function h($value){
+ return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
+}
 
 //投稿キーを取得
 // $sql = 'SELECT * FROM `secret` WHERE 1';
@@ -146,9 +159,6 @@ if(isset($_POST)&&!empty($_POST)){
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
-                  <!-- <li class="hidden">
-                      <a href="bbs.php">実況掲示板TOPへ</a>
-                  </li> -->
                   <li class="page-scroll">
                       <a href="http://ut-sunfriend.com">HPへ戻る</a>
                   </li>
@@ -158,9 +168,6 @@ if(isset($_POST)&&!empty($_POST)){
                   <li class="page-scroll">
                       <a href="http://ut-sunfriend.com/gamebbs/check.php">編集用ページ</a>
                   </li>
-                  <!-- <li class="page-scroll">
-                      <a href="#contact">Contact</a>
-                  </li> -->
               </ul>
           </div>
           <!-- /.navbar-collapse -->

@@ -1,28 +1,41 @@
 <?php
 try{
-  require('db.php');
+session_start();
+require('db.php');
 
-  function h($value){
-    return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
-  }
+//ログインチェック用のid,passを取得
+$sql = 'SELECT * FROM `secret` WHERE 1';
+$stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+$rec = mysqli_fetch_assoc($stmt);
+$editid = $rec['editid'];
+$editpass = $rec['editpass'];
 
-  $id ='';
-  if (isset($_GET['id'])&&!empty($_GET['id'])) {
-    $id = $_GET['id'];
-  }
+//ログインチェック
+if ($_SESSION['editid'] != $editid || $_SESSION['editpass'] != $editpass) {
+  header('Location: http://ut-sunfriend.com/gamebbs/check.php');
+}
 
-  if (isset($_GET['action'])&&($_GET['action']=='delete')) {
-      $sq= sprintf('SELECT `gameid` FROM `results` WHERE `id`="%d"',
-           mysqli_real_escape_string($db,$sq));
-      $stmt = mysqli_query($db,$sq) or die(mysqli_error($db));
-      $req = mysqli_fetch_assoc($stmt);
-      $id = $req['gameid'];
+function h($value){
+  return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
+}
 
-      $sql=sprintf('DELETE FROM `results` WHERE `id`="%d"',
-           mysqli_real_escape_string($db,$id));
-      $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-      header('Location: http://ut-sunfriend.com/gamebbs/result.php?id='.$id);
-  }
+$id ='';
+
+if (isset($_GET['id'])&&!empty($_GET['id'])) {
+  $id = $_GET['id'];
+}
+
+if (isset($_GET['action'])&&($_GET['action']=='delete')) {
+    $sq= sprintf('SELECT `gameid` FROM `results` WHERE `id`="%d"',
+         mysqli_real_escape_string($db,$sq));
+    $stmt = mysqli_query($db,$sq) or die(mysqli_error($db));
+    $req = mysqli_fetch_assoc($stmt);
+    $id = $req['gameid'];
+    $sql=sprintf('DELETE FROM `results` WHERE `id`="%d"',
+         mysqli_real_escape_string($db,$id));
+    $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+    header('Location: http://ut-sunfriend.com/gamebbs/result.php?id='.$id);
+}
 
   // $error = array();
   // if(isset($_POST) && !empty($_POST)){
@@ -168,7 +181,6 @@ try{
         <article class="timeline-entry">
 
             <div class="timeline-entry-inner">
-                <!--<a href="bbspr2.php?action=edit&id=<?php echo $post['id'];?>">-->
                 <div class="timeline-icon bg-success">
                     <i class="entypo-feather"></i>
                     <i class="fa fa-play-circle"></i>

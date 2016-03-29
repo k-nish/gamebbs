@@ -1,6 +1,19 @@
 <?php
 try{
 require('db.php');
+session_start();
+
+//ログインチェック用のid,passを取得
+$sql = 'SELECT * FROM `secret` WHERE 1';
+$stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+$rec = mysqli_fetch_assoc($stmt);
+$id = $rec['id'];
+$pass = $rec['pass'];
+
+//ログインチェック
+if ($_SESSION['id'] != $id || $_SESSION['pass'] != $pass) {
+  header('Location: http://ut-sunfriend.com/gamebbs/index.php');
+}
 
 $id = '';
 $name = '';

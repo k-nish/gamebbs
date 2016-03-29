@@ -1,9 +1,18 @@
 <?php
 try{
-  require('db.php');
+require('db.php');
+session_start();
 
-  function h($value){
-    return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
+//ログインチェック用のid,passを取得
+$sql = 'SELECT * FROM `secret` WHERE 1';
+$stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+$rec = mysqli_fetch_assoc($stmt);
+$id = $rec['id'];
+$pass = $rec['pass'];
+
+//ログインチェック
+if ($_SESSION['id'] != $id || $_SESSION['pass'] != $pass) {
+  header('Location: http://ut-sunfriend.com/gamebbs/index.php');
 }
 
 //投稿キーを取得
@@ -12,6 +21,9 @@ try{
 // $rec = mysqli_fetch_assoc($stmt);
 // $pass = $rec['toukou'];
 
+function h($value){
+    return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
+}
 
   $id ='';
   if (isset($_GET['id'])&&!empty($_GET)) {
@@ -119,9 +131,6 @@ try{
                   <li class="page-scroll">
                       <a href="http://ut-sunfriend.com/gamebbs/check.php">編集用ページへ</a>
                   </li>
-                  <!-- <li class="page-scroll">
-                      <a href="#contact">Contact</a>
-                  </li> -->
               </ul>
           </div>
           <!-- /.navbar-collapse -->
