@@ -165,9 +165,6 @@ if(isset($_POST)&&!empty($_POST)){
                   <li class="page-scroll">
                       <a href="http://ut-sunfriend.com/gamebbs/bbs.php">実況掲示板TOPへ</a>
                   </li>
-                  <li class="page-scroll">
-                      <a href="http://ut-sunfriend.com/gamebbs/check.php">編集用ページ</a>
-                  </li>
               </ul>
           </div>
           <!-- /.navbar-collapse -->
@@ -253,9 +250,9 @@ if(isset($_POST)&&!empty($_POST)){
                           $gameday = date('Y/m/d',$gameday);
                       ?>
                       <span style="font-size:20px"><?php echo h($gameday);?></span>
-                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php?action=edit&id=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
+                      <a href="http://ut-sunfriend.com/gamebbs/edit.php?action=edit&id=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
                       <a href="#" onclick="destroy(<?php echo h($post['gameid']);?>)"><i class="fa fa-trash-o"></i></a>
-                      <p><a href="http://ut-sunfriend.com/gamebbs/kekka.php?id=<?php echo h($po['gameid']); ?>">最新投稿:<strong><?php echo h($po['result']); ?><strong></p>
+                      <p><a href="http://ut-sunfriend.com/gamebbs/result.php?id=<?php echo h($po['gameid']); ?>">最新投稿:<strong><?php echo h($po['result']); ?><strong></p>
                     </h2>
             </div>
 
