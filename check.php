@@ -90,7 +90,7 @@ if (isset($_POST)&&!empty($_POST)) {
           <div class="form-group">
             <h1>Password</h1>
             <div class="input-group" data-validate="length" data-length="3">
-            <input type="text" class="form-control" name="editpass" id="validate-length" placeholder="当ててみろ!" required>
+            <input type="password" class="form-control" name="editpass" id="validate-length" placeholder="当ててみろ!" required>
             <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
           </div>
       </div>
