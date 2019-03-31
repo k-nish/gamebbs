@@ -143,20 +143,6 @@ function h($value){
 
     <form action="http://ut-sunfriend.com/gamebbs/kekka.php?id=<?php echo h($id); ?>" method="post">
       <div class="form-group">
-            <h1>学年(何か書いてね)</h1>
-            <div class="input-group">
-              <?php if (isset($error['key'])&&($error['key']=='wrong')) { ?>
-                <input type="text" name="years" class="form-control"
-                       id="validate-text" placeholder="学年" value="<?php echo h($_POST['years']); ?>" required>
-              <?php }else{ ?>
-              <input type="text" name="years" class="form-control"
-                       id="validate-text" placeholder="学年" required>
-              <?php } ?>
-              <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
-            </div>
-
-      </div>
-      <div class="form-group">
             <h1>結果(何か入力してね)</h1>
             <div class="input-group" data-validate="length" data-length="1">
               <?php if (isset($error['key'])&&($error['key']=='wrong')) { ?>
