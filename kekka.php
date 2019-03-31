@@ -25,69 +25,69 @@ function h($value){
     return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
 }
 
-  $id ='';
-  if (isset($_GET['id'])&&!empty($_GET)) {
-    $id = $_GET['id'];
-  }
+$id ='';
+if (isset($_GET['id'])&&!empty($_GET)) {
+  $id = $_GET['id'];
+}
 
-  //ページング処理
-  $page ='';
-  if (isset($_GET['page'])) {
-    $page = $_GET['page'];
-  }
-  if ($page=='') {
-    $page = 1;
-  }
-  $page = max($page,1);
-  $table = array();
-  $s = sprintf('SELECT COUNT(*) AS cnt FROM `results` WHERE `gameid`= %d',
-          mysqli_real_escape_string($db,$id));
-  $stmt = mysqli_query($db,$s) or die(mysqli_error($db));
-  $table = mysqli_fetch_assoc($stmt);
-  $maxpage = ceil($table['cnt'] / 6);
-  $page = min($page,$maxpage);
-  $start = ($page -1) * 6;
-  $start = max($start,0);
+//ページング処理
+$page ='';
+if (isset($_GET['page'])) {
+  $page = $_GET['page'];
+}
+if ($page=='') {
+  $page = 1;
+}
+$page = max($page,1);
+$table = array();
+$s = sprintf('SELECT COUNT(*) AS cnt FROM `results` WHERE `gameid`= %d',
+        mysqli_real_escape_string($db,$id));
+$stmt = mysqli_query($db,$s) or die(mysqli_error($db));
+$table = mysqli_fetch_assoc($stmt);
+$maxpage = ceil($table['cnt'] / 6);
+$page = min($page,$maxpage);
+$start = ($page -1) * 6;
+$start = max($start,0);
 
-  $error = array();
-  if(isset($_POST) && !empty($_POST)){
-      // if(mb_convert_kana($_POST['key'],'r','UTF-8')==$pass){
-          $kresult = mb_convert_kana($_POST['result'],'sa','UTF-8');
-          $kyears = mb_convert_kana('sunfriender','sa','UTF-8');
-          $sql = sprintf('INSERT INTO `results`(`id`, `result`, `years`, `date`, `gameid`)
-              VALUES (null,"%s","%s",now(),"%d")',
-              mysqli_real_escape_string($db,$kresult),
-              mysqli_real_escape_string($db,$kyears),
-              mysqli_real_escape_string($db,$_POST['id']));
-          $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-          $id=$_POST['id'];
-          header('Location: http://ut-sunfriend.com/gamebbs/kekka.php?id='.$id);
-      // }elseif(mb_convert_kana($_POST['key'],'r','UTF-8') !=$pass){
-      //     $error['key'] = 'wrong';
-      //     $id=$_POST['id'];
-      // }
-  }
+$error = array();
+if(isset($_POST) && !empty($_POST)){
+    // if(mb_convert_kana($_POST['key'],'r','UTF-8')==$pass){
+    $kresult = mb_convert_kana($_POST['result'],'sa','UTF-8');
+    $kyears = mb_convert_kana('sunfriender','sa','UTF-8');
+    $sql = sprintf('INSERT INTO `results`(`id`, `result`, `years`, `date`, `gameid`)
+        VALUES (null,"%s","%s",now(),"%d")',
+        mysqli_real_escape_string($db,$kresult),
+        mysqli_real_escape_string($db,$kyears),
+        mysqli_real_escape_string($db,$_POST['id']));
+    $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+    $id=$_POST['id'];
+    header('Location: http://ut-sunfriend.com/gamebbs/kekka.php?id='.$id);
+    // }elseif(mb_convert_kana($_POST['key'],'r','UTF-8') !=$pass){
+    //     $error['key'] = 'wrong';
+    //     $id=$_POST['id'];
+    // }
+}
 
-  $sql = sprintf('SELECT * FROM `results` WHERE gameid = "%d" ORDER BY `id` DESC LIMIT %d,6',
-    mysqli_real_escape_string($db,$id),
-    mysqli_real_escape_string($db,$start));
-  $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-  $posts = array();
-  while(1){
-      $rec = mysqli_fetch_assoc($stmt);
-      if($rec == false){
-          break;
-      }
-      $posts[]=$rec;
-  }
+$sql = sprintf('SELECT * FROM `results` WHERE gameid = "%d" ORDER BY `id` DESC LIMIT %d,6',
+  mysqli_real_escape_string($db,$id),
+  mysqli_real_escape_string($db,$start));
+$stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+$posts = array();
+while(1){
+    $rec = mysqli_fetch_assoc($stmt);
+    if($rec == false){
+        break;
+    }
+    $posts[]=$rec;
+}
 
-  $sq = sprintf('SELECT * FROM `names` WHERE gameid ="%d"',
-    mysqli_real_escape_string($db,$id));
-  $stmt = mysqli_query($db,$sq) or die(mysqli_error($db));
-  $rec = mysqli_fetch_assoc($stmt);
-  $name = $rec['gamename'];
+$sq = sprintf('SELECT * FROM `names` WHERE gameid ="%d"',
+  mysqli_real_escape_string($db,$id));
+$stmt = mysqli_query($db,$sq) or die(mysqli_error($db));
+$rec = mysqli_fetch_assoc($stmt);
+$name = $rec['gamename'];
 
-    $dbh=null;
+  $dbh=null;
 ?>
 
 <!DOCTYPE html>
