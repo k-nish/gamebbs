@@ -11,7 +11,6 @@ $pass = $rec['pass'];
 $error = array();
 if (isset($_POST)&&!empty($_POST)) {
     if ($_POST['pass'] == $pass) {
-        $_SESSION['id'] = "sunf";
         $_SESSION['pass'] = $_POST['pass'];
         header('Location: http://ut-sunfriend.com/gamebbs/bbs.php');
     } else if (($_POST['pass'] != $pass)) {
