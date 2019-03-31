@@ -53,7 +53,7 @@ function h($value){
   if(isset($_POST) && !empty($_POST)){
       // if(mb_convert_kana($_POST['key'],'r','UTF-8')==$pass){
           $kresult = mb_convert_kana($_POST['result'],'sa','UTF-8');
-          $kyears = mb_convert_kana($_POST['years'],'sa','UTF-8');
+          $kyears = mb_convert_kana('実況者','sa','UTF-8');
           $sql = sprintf('INSERT INTO `results`(`id`, `result`, `years`, `date`, `gameid`)
               VALUES (null,"%s","%s",now(),"%d")',
               mysqli_real_escape_string($db,$kresult),
@@ -143,7 +143,7 @@ function h($value){
 
     <form action="http://ut-sunfriend.com/gamebbs/kekka.php?id=<?php echo h($id); ?>" method="post">
       <div class="form-group">
-            <h1>結果(何か入力してね)</h1>
+            <h1>実況</h1>
             <div class="input-group" data-validate="length" data-length="1">
               <?php if (isset($error['key'])&&($error['key']=='wrong')) { ?>
               <input type="text" class="form-control" name="result" id="validate-length"
