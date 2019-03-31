@@ -53,7 +53,7 @@ function h($value){
   if(isset($_POST) && !empty($_POST)){
       // if(mb_convert_kana($_POST['key'],'r','UTF-8')==$pass){
           $kresult = mb_convert_kana($_POST['result'],'sa','UTF-8');
-          $kyears = mb_convert_kana('実況者','sa','UTF-8');
+          $kyears = mb_convert_kana('sunfriender','sa','UTF-8');
           $sql = sprintf('INSERT INTO `results`(`id`, `result`, `years`, `date`, `gameid`)
               VALUES (null,"%s","%s",now(),"%d")',
               mysqli_real_escape_string($db,$kresult),
