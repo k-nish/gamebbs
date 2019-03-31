@@ -10,20 +10,13 @@ $pass = $rec['pass'];
 
 $error = array();
 if (isset($_POST)&&!empty($_POST)) {
-    if ($_POST['id'] == $id &&$_POST['pass'] == $pass) {
-        $_SESSION['id'] = $_POST['id'];
+    if ($_POST['pass'] == $pass) {
+        $_SESSION['id'] = "sunf";
         $_SESSION['pass'] = $_POST['pass'];
         header('Location: http://ut-sunfriend.com/gamebbs/bbs.php');
-    } else if (($_POST['id'] != $id )&&($_POST['pass'] == $pass)) {
-        $error['id'] = 'wrong';
-    } else if (($_POST['id'] == $id )&&($_POST['pass'] != $pass)) {
-        $error['pass'] = 'wrong';
-    } else if (($_POST['id'] != $id )&&($_POST['pass'] != $pass)) {
-        $error['id'] = 'wrong';
+    } else if (($_POST['pass'] != $pass)) {
         $error['pass'] = 'wrong';
     }
-} else if (isset($_POST['id'])&&$_POST['id'] == '') {
-    $error['id'] = 'blank';
 } else if (isset($_POST['pass'])&&$_POST['pass'] == '') {
     $error['pass'] = 'blank';
 }
@@ -81,14 +74,6 @@ if (isset($_POST)&&!empty($_POST)) {
     <div class="col-md-5 content-margin-top">
     <form action="http://ut-sunfriend.com/gamebbs/index.php" method="post">
         <div class="form-group">
-          <h1>ID</h1>
-          <div class="input-group">
-            <input type="text" name="id" class="form-control"
-                     id="validate-text" placeholder="ID" required>
-            <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
-          </div>
-        </div>
-        <div class="form-group">
           <h1>Password</h1>
           <div class="input-group" data-validate="length" data-length="3">
           <input type="text" class="form-control" name="pass" id="validate-length" placeholder="password" required>
@@ -96,7 +81,7 @@ if (isset($_POST)&&!empty($_POST)) {
           </div>
         </div>
         <?php if ((isset($error['id'])&&$error['id'] == 'wrong') || (isset($error['pass'])&&$error['pass'] == 'wrong')) { ?>
-          <p class='error'>*IDかpasswordが間違っています。</p>
+          <p class='error'>*passwordが間違っています。</p>
         <?php } ?>
         <button type="submit" class="btn btn-danger col-xs-12" disabled>ログイン!</button>
       </form>
