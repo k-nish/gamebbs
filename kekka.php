@@ -11,7 +11,7 @@ $id = $rec['id'];
 $pass = $rec['pass'];
 
 //ログインチェック
-if ($_SESSION['id'] != $id || $_SESSION['pass'] != $pass) {
+if ($_SESSION['pass'] != $pass) {
   header('Location: http://ut-sunfriend.com/gamebbs/index.php');
 }
 
