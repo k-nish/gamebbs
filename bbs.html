@@ -1,13 +1,13 @@
-<?php 
+<?php
  $dsn = 'mysql:dbname=sunfrined;host=localhost';
-     
+
  // 接続するためのユーザー情報
  $user = 'root';
  $password = '';
- 
+
  // DB接続オブジェクトを作成
  $dbh = new PDO($dsn,$user,$password);
- 
+
  // 接続したDBオブジェクトで文字コードutf8を使うように指定
  $dbh->query('SET NAMES utf8');
 
@@ -22,7 +22,7 @@
      $rec = $stmt->fetch(PDO::FETCH_ASSOC);
      $id = $rec['gameid'];
      $name = $rec['gamename'];
-     $day = $rec['gameday']; 
+     $day = $rec['gameday'];
  }
 
  if(isset($_POST)&&!empty($_POST)){
@@ -35,7 +35,7 @@
      $stmt=$dbh->prepare($sql);
      $stmt->execute();
   }
-  
+
   $sun = array();
   $sql = 'SELECT * FROM `names` WHERE 1';
   $stmt=$dbh->prepare($sql);
@@ -45,7 +45,7 @@
     if ($rec == false) {
       break;
     }
-  $sun[] = $rec; 
+  $sun[] = $rec;
   }
  }
   ?>
@@ -97,7 +97,7 @@
           <!-- /.navbar-collapse -->
       </div>
       <!-- /.container-fluid -->
-  </nav> 
+  </nav>
   <div class="container">
     <div class="row">
       <div class="col-md-4 content-margin-top">
@@ -111,7 +111,7 @@
 
               <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
             </div>
-            
+
       </div>
       <div class="form-group">
           <h5>試合日</h5>
@@ -147,13 +147,13 @@
                 </div>
 
                 <div class="timeline-label">
-                    <h2><a href="#"><?php echo $post['name'];?></a> 
+                    <h2><a href="#"><?php echo $post['name'];?></a>
                       <!--<?php
                           //一旦日時型に変換
                           //$created = strtotime($post['created']);
 
                           //書式を変換
-                          //$created = date('Y/m/d',$created);                          
+                          //$created = date('Y/m/d',$created);
                       ?>-->
 
                       <span><?php echo $post['gameday'];?></span>
@@ -163,7 +163,7 @@
                     <!--<p><?php //echo $post['comment'];?></br>
                       <a href="bbspr2.php?action=delete&id=<?php //echo $post['id'];?>"><i class="fa fa-trash-o"></i></a>
                     </p>-->
-                    
+
             </div>
 
         </article>
@@ -192,7 +192,7 @@
 
 
 
-  
+
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
