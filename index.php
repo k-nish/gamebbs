@@ -79,7 +79,7 @@ if (isset($_POST)&&!empty($_POST)) {
           <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
           </div>
         </div>
-        <?php if ((isset($error['id'])&&$error['id'] == 'wrong') || (isset($error['pass'])&&$error['pass'] == 'wrong')) { ?>
+        <?php if ((isset($error['pass'])&&$error['pass'] == 'wrong')) { ?>
           <p class='error'>*passwordが間違っています。</p>
         <?php } ?>
         <button type="submit" class="btn btn-danger col-xs-12" disabled>ログイン!</button>
