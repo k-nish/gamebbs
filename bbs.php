@@ -61,37 +61,31 @@ if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
 
  //投稿をinsert or 編集を記録
 if(isset($_POST)&&!empty($_POST)){
-    // if(isset($_POST['key']) && !empty($_POST['key'])){
-    //     if (mb_convert_kana($_POST['key'],'r','UTF-8')==$pass) {
-            if(isset($_POST['update'])&&!empty($_POST['gamename'])){
-                $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
-                $sql = sprintf('UPDATE `names` SET `gamename`="%s",gameday=now() WHERE `gameid`="%d"',
-                        mysqli_real_escape_string($db,$gname),
-                        mysqli_real_escape_string($db,$_POST['gameid']));
-                $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+    if(isset($_POST['update'])&&!empty($_POST['gamename'])){
+        $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
+        $sql = sprintf('UPDATE `names` SET `gamename`="%s",gameday=now() WHERE `gameid`="%d"',
+                mysqli_real_escape_string($db,$gname),
+                mysqli_real_escape_string($db,$_POST['gameid']));
+        $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
 
-            }elseif(isset($_POST['gamename'])&&!empty($_POST['gamename'])) {
-                 //試合名の登録
-                $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
-                $sql = sprintf('INSERT INTO `names`(`gamename`, `gameday`) VALUES ("%s",now())',
-                        mysqli_real_escape_string($db,$gname));
-                $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-                //gameidの取得
-                $newid = array();
-                $sq = 'SELECT `gameid` FROM `names` WHERE 1 ORDER BY `gameday` DESC LIMIT 1';
-                $stm = mysqli_query($db,$sq) or die(mysqli_error($db));
-                $newid = mysqli_fetch_assoc($stm);
-                //最初の投稿を登録
-                $sqls = sprintf('INSERT INTO `results`SET `result`="%sの実況はじめます!", `contributor`="sunfriend", `date`=now(), `gameid`=%d',
-                            mysqli_real_escape_string($db,$gname),
-                            mysqli_real_escape_string($db,$newid['gameid']));
-                $stmtt = mysqli_query($db,$sqls) or die(mysqli_error($db));
-                header('Location: http://ut-sunfriend.com/gamebbs/bbs.php');
-            }
-        // }elseif($_POST['key']!=$pass){
-        //      $error['key'] = 'wrong';
-        // }
-    // }
+    }elseif(isset($_POST['gamename'])&&!empty($_POST['gamename'])) {
+         //試合名の登録
+        $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
+        $sql = sprintf('INSERT INTO `names`(`gamename`, `gameday`) VALUES ("%s",now())',
+                mysqli_real_escape_string($db,$gname));
+        $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+        //gameidの取得
+        $newid = array();
+        $sq = 'SELECT `gameid` FROM `names` WHERE 1 ORDER BY `gameday` DESC LIMIT 1';
+        $stm = mysqli_query($db,$sq) or die(mysqli_error($db));
+        $newid = mysqli_fetch_assoc($stm);
+        //最初の投稿を登録
+        $sqls = sprintf('INSERT INTO `results`SET `result`="%sの実況はじめます!", `contributor`="sunfriend", `date`=now(), `gameid`=%d',
+                    mysqli_real_escape_string($db,$gname),
+                    mysqli_real_escape_string($db,$newid['gameid']));
+        $stmtt = mysqli_query($db,$sqls) or die(mysqli_error($db));
+        header('Location: http://ut-sunfriend.com/gamebbs/bbs.php');
+    }
 }
 
 //試合名を取得
@@ -200,7 +194,7 @@ $dbh = null;
       <?php if($name==''){ ?>
       <button type="submit"  class="btn btn-danger col-xs-12" disabled>投稿する</button>
       <?php }elseif($name != ''){?>
-      <input type='hidden' name='gameid' value='<?php echo "$id";?>'>
+      <input type='hidden' name='gameid' value='<?php echo "$gameid";?>'>
       <button type="submit"  name='update' class="btn btn-danger col-xs-12" disabled>書き直す</button>
       <?php } ?>
       <br>
