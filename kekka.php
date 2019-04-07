@@ -59,7 +59,7 @@ $error = array();
 if(isset($_POST) && !empty($_POST)){
     if(isset($_POST['update'])&&!empty($_POST['result'])){
         $result = mb_convert_kana($_POST['result'],'sa','UTF-8');
-        $sql = sprintf('UPDATE `results` SET `result`=%s WHERE `id`=%d',
+        $sql = sprintf('UPDATE `results` SET `result`="%s" WHERE `id`=%d',
                  mysqli_real_escape_string($db,$result),
                  mysqli_real_escape_string($db,$_POST['resultid']));
         $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
@@ -70,9 +70,8 @@ if(isset($_POST) && !empty($_POST)){
             VALUES ("%s","%s",now(),"%d")',
             mysqli_real_escape_string($db,$result),
             mysqli_real_escape_string($db,$contributor),
-            mysqli_real_escape_string($db,$_POST['gameid']));
+            mysqli_real_escape_string($db,$gameid));
         $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-        $gameid=$_POST['gameid'];
         header('Location: http://ut-sunfriend.com/gamebbs/kekka.php?gameid='.$gameid);
     }
 }
