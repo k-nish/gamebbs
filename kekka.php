@@ -61,7 +61,7 @@ if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
     $rec = mysqli_fetch_assoc($stmt);
     $gameid = $rec['gameid'];
     $sql=sprintf('DELETE FROM `results` WHERE `id`="%d"',
-         mysqli_real_escape_string($db,$id));
+         mysqli_real_escape_string($db,$_GET['resultid']));
     $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
     header('Location: http://ut-sunfriend.com/gamebbs/kekka.php?gameid='.$gameid);
 }
@@ -124,6 +124,7 @@ $dbh=null;
 
     <script type="text/javascript">
     function destroy(resultid){
+        console.log(resultid);
         if (confirm('削除しますか')) {
            location.href = 'http://ut-sunfriend.com/gamebbs/kekka.php?action=delete&resultid='+resultid;
            return true;
