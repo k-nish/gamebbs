@@ -20,12 +20,6 @@ $day = '';
 $key = '';
 $error = array();
 
-//投稿キーを取得
-// $sql = 'SELECT * FROM `secret` WHERE 1';
-// $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-// $rec = mysqli_fetch_assoc($stmt);
-// $pass = $rec['toukou'];
-
 function h($value){
     return htmlspecialchars($value,ENT_QUOTES,'UTF-8');
 }
