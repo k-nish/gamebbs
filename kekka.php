@@ -215,7 +215,7 @@ $dbh=null;
                 <article class="timeline-entry">
                     <div class="timeline-entry-inner">
                         <div class="timeline-icon bg-success">
-                            <i class="entypo-feather"></i>
+                            <i class="entypo-feather blue_button"></i>
                             <i class="fa fa-play-circle blue_button"></i>
                         </div>
                         <div class="timeline-label">
