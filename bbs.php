@@ -181,16 +181,6 @@ $dbh = null;
             </div>
 
       </div>
-      <!-- <div class="form-group">
-              <h1>投稿キー</h1>
-                  <div class="input-group" data-validate="length" data-length="3">
-                  <input type="text" class="form-control" name="key" id="validate-length" placeholder="投稿キー  ヒントは...." required>
-                  <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
-                  </div>
-                  // <?php if(isset($error['key'])&&$error['key']=='wrong'){ ?>
-                  <p class="error">*正しい投稿キーを入れてください。</p>
-                  <?php } ?>
-      </div> -->
       <?php if($name==''){ ?>
       <button type="submit"  class="btn btn-danger col-xs-12" disabled>投稿する</button>
       <?php }elseif($name != ''){?>
