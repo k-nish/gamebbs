@@ -222,15 +222,15 @@ $dbh = null;
                     <?php }else{ ?>
                     <?php echo "この試合名は削除されました。" ?></a>
                     <?php }}} ?>
+                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php?action=edit&gameid=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o bg-info"></i>
                       <?php
                           //一旦日時型に変換
                           $gameday = strtotime($po['date']);
                           //書式を変換
-                          $gameday = date('Y/m/d',$gameday);
+                          $gameday = date('Y/m/d H:i:s',$gameday);
                       ?>
                       <span style="font-size:20px"><?php echo h($gameday);?></span>
-                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php?action=edit&gameid=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
-                      <p><a href="http://ut-sunfriend.com/gamebbs/kekka.php?gameid=<?php echo h($po['gameid']); ?>">最新投稿:<strong><?php echo h($po['result']); ?><strong></p>
+                      <p><a href="http://ut-sunfriend.com/gamebbs/kekka.php?gameid=<?php echo h($po['gameid']); ?>"><strong><?php echo h($po['result']); ?><strong></p>
                     </h2>
             </div>
 
