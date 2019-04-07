@@ -44,11 +44,11 @@ $start = max($start,0);
 
 $error = array();
 if(isset($_POST) && !empty($_POST)){
-    if(isset($_POST['update'])){
-        $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
-        $sql = sprintf('UPDATE `names` SET `gamename`=%s,gameday=now() WHERE `gameid`=%d',
-                 mysqli_real_escape_string($db,$gname),
-                 mysqli_real_escape_string($db,$_POST['gameid']));
+    if(isset($_POST['update'])&&!empty($_POST['result'])){
+        $result = mb_convert_kana($_POST['result'],'sa','UTF-8');
+        $sql = sprintf('UPDATE `results` SET `result`=%s WHERE `id`=%d',
+                 mysqli_real_escape_string($db,$result),
+                 mysqli_real_escape_string($db,$_POST['resultid']));
         $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
     } else {
         $kresult = mb_convert_kana($_POST['result'],'sa','UTF-8');
