@@ -51,7 +51,7 @@ if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
     $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
     $rec = mysqli_fetch_assoc($stmt);
     $gmaeid = $rec['gameid'];
-    $resultid = $rec['resultid'];
+    $resultid = $rec['id'];
     $result = $rec['result'];
 }
 
@@ -65,7 +65,7 @@ if(isset($_POST) && !empty($_POST)){
         $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
     } else {
         $result = mb_convert_kana($_POST['result'],'sa','UTF-8');
-        $contributor = mb_convert_kana('sunfriender','sa','UTF-8');
+        $contributor = mb_convert_kana('sunfriend','sa','UTF-8');
         $sql = sprintf('INSERT INTO `results`(`result`, `contributor`, `date`, `gameid`)
             VALUES ("%s","%s",now(),"%d")',
             mysqli_real_escape_string($db,$result),
@@ -164,9 +164,9 @@ $dbh=null;
                 <?php if($result=='') { ?>
                     <input type="hidden" name="gameid" value=<?php echo h($gameid); ?>>
                     <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>実況する!</button>
-                <?php }elseif($result != '') {?>
+                <?php }elseif($result!='') {?>
                     <input type="hidden" name="resultid" value=<?php echo h($resultid); ?>>
-                    <button type="submit"  name='update' class="btn btn-danger col-xs-12" disabled>書き直す</button>
+                    <button type="submit" name="update" class="btn btn-danger col-xs-12" disabled>書き直す</button>
                 <?php } ?>
                 <br><br>
                 <p>
