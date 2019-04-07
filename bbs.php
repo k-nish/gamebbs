@@ -53,11 +53,11 @@ $start = max($start,0);
 if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
     $sql = sprintf('SELECT * FROM `names` WHERE gameid=%d',
             mysqli_real_escape_string($db,$_GET['id']));
-     $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
-     $rec = mysqli_fetch_assoc($stmt);
-     $id = $rec['gameid'];
-     $name = $rec['gamename'];
-     $day = $rec['gameday'];
+    $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+    $rec = mysqli_fetch_assoc($stmt);
+    $id = $rec['gameid'];
+    $name = $rec['gamename'];
+    $day = $rec['gameday'];
  }
 
  //投稿をinsert or 編集を記録
