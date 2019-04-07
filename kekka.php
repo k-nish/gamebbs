@@ -214,7 +214,7 @@ $dbh=null;
             <?php foreach ($posts as $post) { ?>
                 <article class="timeline-entry">
                     <div class="timeline-entry-inner">
-                        <div class="timeline-icon bg-success">
+                        <div class="timeline-icon bg-info">
                             <i class="entypo-feather blue_button"></i>
                             <i class="fa fa-play-circle blue_button"></i>
                         </div>
