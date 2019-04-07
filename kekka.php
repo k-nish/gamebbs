@@ -223,7 +223,7 @@ $dbh=null;
                                     //一旦日時型に変換
                                     $date = strtotime($post['date']);
                                     //書式を変換
-                                    $date = date('Y/m/d H:M:S',$date);
+                                    $date = date('Y/m/d H:i:s',$date);
                                 ?>
                                 <span style="font-size:20px"><?php echo h($date);?></span>
                                 <a href="#" onclick="destroy(<?php echo h($post['id']);?>)"><i class="fa fa-trash-o"></i></a>
