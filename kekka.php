@@ -147,18 +147,6 @@ $dbh=null;
                         <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
                     </div>
                 </div>
-          <!-- <div class="form-group">
-                <h1>投稿キー</h1>
-                <div class="input-group">
-                  <input type="text" name="key" class="form-control"
-                           id="validate-text" placeholder="今回もヒントは。。。。ないぜ" required>
-
-                  <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
-                </div>
-                <?php if(isset($error['key'])&&$error['key']=='wrong'){ ?>
-                <p class="error">*正しい投稿キーを入れてください。</p>
-                <?php } ?>
-          </div> -->
           <!-- <h5>実況投稿!</h5> -->
           <input type="hidden" name="gameid" value=<?php echo h($gameid); ?>>
           <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>実況する!</button>
