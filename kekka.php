@@ -51,9 +51,19 @@ if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
             mysqli_real_escape_string($db,$_GET['resultid']));
     $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
     $rec = mysqli_fetch_assoc($stmt);
-    $gmaeid = $rec['gameid'];
+    $gameid = $rec['gameid'];
     $resultid = $rec['id'];
     $edit_result = $rec['result'];
+} elseif(isset($_GET['action'])&& ($_GET['action']=='delete')) {
+    $sql = sprintf('SELECT * FROM `results` WHERE id=%d',
+            mysqli_real_escape_string($db,$_GET['resultid']));
+    $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+    $rec = mysqli_fetch_assoc($stmt);
+    $gameid = $rec['gameid'];
+    $sql=sprintf('DELETE FROM `results` WHERE `id`="%d"',
+         mysqli_real_escape_string($db,$id));
+    $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+    header('Location: http://ut-sunfriend.com/gamebbs/kekka.php?gameid='.$gameid);
 }
 
 $error = array();
@@ -111,6 +121,17 @@ $dbh=null;
     <link rel="stylesheet" href="assets/css/timeline.css">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="shotcut icon"  href="assets/favicon.ico">
+
+    <script type="text/javascript">
+    function destroy(resultid){
+        if (confirm('削除しますか')) {
+           location.href = 'http://ut-sunfriend.com/gamebbs/kekka.php?action=delete&resultid='+resultid;
+           return true;
+        }else{
+            return false;
+        }
+    }
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -197,14 +218,15 @@ $dbh=null;
                         </div>
                         <div class="timeline-label">
                             <h2><a href="#"><?php echo h($post['contributor']);?></a>
+                                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&gameid=<?php echo $gameid; ?>&resultid=<?php echo h($post['id']); ?>"><i class="fa fa-pencil-square-o"></i>
                                 <?php
                                     //一旦日時型に変換
                                     $date = strtotime($post['date']);
                                     //書式を変換
-                                    $date = date('Y/m/d',$date);
+                                    $date = date('Y/m/d H:M:S',$date);
                                 ?>
                                 <span style="font-size:20px"><?php echo h($date);?></span>
-                                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&gameid=<?php echo $gameid; ?>&resultid=<?php echo h($post['id']); ?>"><i class="fa fa-pencil-square-o"></i>
+                                <a href="#" onclick="destroy(<?php echo h($post['id']);?>)"><i class="fa fa-trash-o"></i></a>
                             </h2>
                             <p><strong><?php echo h($post['result']);?><strong></br></p>
                         </div>
