@@ -203,7 +203,7 @@ $dbh=null;
                                     $date = date('Y/m/d',$date);
                                 ?>
                                 <span style="font-size:20px"><?php echo h($date);?></span>
-                                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&resultid=<?php echo h($post['id']); ?>"><i class="fa fa-pencil-square-o"></i>
+                                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&gameid=<?php echo $gameid; ?>&resultid=<?php echo h($post['id']); ?>"><i class="fa fa-pencil-square-o"></i>
                             </h2>
                             <p><strong><?php echo h($post['result']);?><strong></br></p>
                         </div>
