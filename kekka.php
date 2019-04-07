@@ -66,7 +66,7 @@ if(isset($_POST) && !empty($_POST)){
     } else {
         $result = mb_convert_kana($_POST['result'],'sa','UTF-8');
         $contributor = mb_convert_kana('sunfriender','sa','UTF-8');
-        $sql = sprintf('INSERT INTO `results`(`result`, `contibutor`, `date`, `gameid`)
+        $sql = sprintf('INSERT INTO `results`(`result`, `contributor`, `date`, `gameid`)
             VALUES ("%s","%s",now(),"%d")',
             mysqli_real_escape_string($db,$result),
             mysqli_real_escape_string($db,$contributor),
