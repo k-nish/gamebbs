@@ -167,7 +167,7 @@ $dbh=null;
                     <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>実況する!</button>
                 <?php }elseif($result != '') {?>
                     <input type="hidden" name="resultid" value=<?php echo h($resultid); ?>>
-                    <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>書き直す</button>
+                    <button type="submit"  name='update' class="btn btn-danger col-xs-12" disabled>書き直す</button>
                 <?php } ?>
                 <br><br>
                 <p>
