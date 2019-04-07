@@ -51,12 +51,12 @@ if(isset($_POST) && !empty($_POST)){
                  mysqli_real_escape_string($db,$_POST['resultid']));
         $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
     } else {
-        $kresult = mb_convert_kana($_POST['result'],'sa','UTF-8');
-        $kyears = mb_convert_kana('sunfriender','sa','UTF-8');
+        $result = mb_convert_kana($_POST['result'],'sa','UTF-8');
+        $contributor = mb_convert_kana('sunfriender','sa','UTF-8');
         $sql = sprintf('INSERT INTO `results`(`result`, `contibutor`, `date`, `gameid`)
             VALUES ("%s","%s",now(),"%d")',
-            mysqli_real_escape_string($db,$kresult),
-            mysqli_real_escape_string($db,'contributor'),
+            mysqli_real_escape_string($db,$result),
+            mysqli_real_escape_string($db,$contributor),
             mysqli_real_escape_string($db,$_POST['gameid']));
         $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
         $gameid=$_POST['gameid'];
@@ -183,15 +183,15 @@ $dbh=null;
                     </div>
 
                     <div class="timeline-label">
-                        <h2><a href="#"><?php echo h($post['years']);?></a>
+                        <h2><a href="#"><?php echo h($post['contributor']);?></a>
                           <?php
                               //一旦日時型に変換
                               $date = strtotime($post['date']);
                               //書式を変換
                               $date = date('Y/m/d',$date);
                           ?>
-
                           <span style="font-size:20px"><?php echo h($date);?></span>
+                            <a href="http://ut-sunfriend.com/gamebbs/bbs.php?action=edit&gameid=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
                         </h2>
                         <p><strong><?php echo h($post['result']);?><strong></br></p>
                 </div>
