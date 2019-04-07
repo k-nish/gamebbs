@@ -43,7 +43,8 @@ $start = ($page -1) * 6;
 $start = max($start,0);
 
 $resultid = '';
-$result= '';
+$result = '';
+$edit_result = '';
  //編集するための編集元の情報を表示
 if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
     $sql = sprintf('SELECT * FROM `results` WHERE id=%d',
@@ -52,7 +53,7 @@ if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
     $rec = mysqli_fetch_assoc($stmt);
     $gmaeid = $rec['gameid'];
     $resultid = $rec['id'];
-    $result = $rec['result'];
+    $edit_result = $rec['result'];
 }
 
 $error = array();
@@ -155,16 +156,16 @@ $dbh=null;
                             placeholder="結果 ex.ファイナルイン!" value="<?php echo h($_POST['result']); ?>" required>
                         <?php }else{ ?>
                         <input type="text" class="form-control" name="result" id="validate-length" placeholder="結果 ex.ファイナルイン!"
-                        value="<?php echo h($result); ?>" required>
+                        value="<?php echo h($edit_result); ?>" required>
                         <?php } ?>
                         <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
                     </div>
                 </div>
                 <!-- <h5>実況投稿!</h5> -->
-                <?php if($result=='') { ?>
+                <?php if($edit_result=='') { ?>
                     <input type="hidden" name="gameid" value=<?php echo h($gameid); ?>>
                     <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>実況する!</button>
-                <?php }elseif($result!='') {?>
+                <?php }elseif($edit_result!='') {?>
                     <input type="hidden" name="resultid" value=<?php echo h($resultid); ?>>
                     <button type="submit" name="update" class="btn btn-danger col-xs-12" disabled>書き直す</button>
                 <?php } ?>
