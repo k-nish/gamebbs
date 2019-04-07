@@ -24,7 +24,7 @@ if (isset($_GET['gameid'])&&!empty($_GET)) {
 }
 
 //ページング処理
-$page ='';
+$page = '';
 if (isset($_GET['page'])) {
   $page = $_GET['page'];
 }
@@ -41,6 +41,19 @@ $maxpage = ceil($table['cnt'] / 6);
 $page = min($page,$maxpage);
 $start = ($page -1) * 6;
 $start = max($start,0);
+
+$resultid = '';
+$result= '';
+ //編集するための編集元の情報を表示
+if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
+    $sql = sprintf('SELECT * FROM `results` WHERE id=%d',
+            mysqli_real_escape_string($db,$_GET['resultid']));
+    $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
+    $rec = mysqli_fetch_assoc($stmt);
+    $gmaeid = $rec['gameid'];
+    $resultid = $rec['resultid'];
+    $result = $rec['result'];
+}
 
 $error = array();
 if(isset($_POST) && !empty($_POST)){
@@ -142,79 +155,69 @@ $dbh=null;
                         <input type="text" class="form-control" name="result" id="validate-length"
                             placeholder="結果 ex.ファイナルイン!" value="<?php echo h($_POST['result']); ?>" required>
                         <?php }else{ ?>
-                        <input type="text" class="form-control" name="result" id="validate-length" placeholder="結果 ex.ファイナルイン!" required>
+                        <input type="text" class="form-control" name="result" id="validate-length" placeholder="結果 ex.ファイナルイン!"
+                        value="<?php echo h($result); ?>" required>
                         <?php } ?>
                         <span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
                     </div>
                 </div>
-          <!-- <h5>実況投稿!</h5> -->
-          <input type="hidden" name="gameid" value=<?php echo h($gameid); ?>>
-          <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>実況する!</button>
-          <br>
-          <br>
-          <p>
-          <?php if ($page<$maxpage){ ?>
-          <a href="http://ut-sunfriend.com/gamebbs/kekka.php?page=<?php echo ($page + 1); ?>&gameid=<?php echo $gameid; ?>" class="btn btn-default">以前の投稿へ</a>
-          <?php }else{ ?>
-          最終ページだよ
-          <?php } ?>
-          <?php if ($page>1) { ?>
-          <a href="http://ut-sunfriend.com/gamebbs/kekka.php?page=<?php echo ($page - 1); ?>&gameid=<?php echo $gameid; ?>" class="btn btn-default">最新の投稿へ</a>
-          <?php }else{ ?>
-          最新のページだよ
-          <?php } ?>
-          </p>
-        </form>
-
-          </div>
+                <!-- <h5>実況投稿!</h5> -->
+                <?php if($result=='') { ?>
+                    <input type="hidden" name="gameid" value=<?php echo h($gameid); ?>>
+                    <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>実況する!</button>
+                <?php }elseif($result != '') {?>
+                    <input type="hidden" name="resultid" value=<?php echo h($resultid); ?>>
+                    <button type="submit"  name='report' class="btn btn-danger col-xs-12" disabled>書き直す</button>
+                <?php } ?>
+                <br><br>
+                <p>
+                    <?php if ($page<$maxpage){ ?>
+                    <a href="http://ut-sunfriend.com/gamebbs/kekka.php?page=<?php echo ($page + 1); ?>&gameid=<?php echo $gameid; ?>" class="btn btn-default">以前の投稿へ</a>
+                    <?php }else{ ?>
+                    最終ページだよ
+                    <?php } ?>
+                    <?php if ($page>1) { ?>
+                    <a href="http://ut-sunfriend.com/gamebbs/kekka.php?page=<?php echo ($page - 1); ?>&gameid=<?php echo $gameid; ?>" class="btn btn-default">最新の投稿へ</a>
+                    <?php }else{ ?>
+                    最新のページだよ
+                    <?php } ?>
+                </p>
+            </form>
+        </div>
           <!--<h3>実況なう!</h3>-->
-          <div class="col-md-7 content-margin-top">
+        <div class="col-md-7 content-margin-top">
             <!--<h3>実況なう!</h3>-->
             <div class="timeline-centered">
-            <?php
-            foreach ($posts as $post) { ?>
-
-            <article class="timeline-entry">
-
-                <div class="timeline-entry-inner">
-                    <div class="timeline-icon bg-success">
-                        <i class="entypo-feather"></i>
-                        <i class="fa fa-play-circle"></i>
-                    </div>
-
-                    <div class="timeline-label">
-                        <h2><a href="#"><?php echo h($post['contributor']);?></a>
-                          <?php
-                              //一旦日時型に変換
-                              $date = strtotime($post['date']);
-                              //書式を変換
-                              $date = date('Y/m/d',$date);
-                          ?>
-                          <span style="font-size:20px"><?php echo h($date);?></span>
-                            <a href="http://ut-sunfriend.com/gamebbs/bbs.php?action=edit&gameid=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
-                        </h2>
-                        <p><strong><?php echo h($post['result']);?><strong></br></p>
-                </div>
-
-            </article>
-
-            <?php
-            }
-            ?>
+            <?php foreach ($posts as $post) { ?>
+                <article class="timeline-entry">
+                    <div class="timeline-entry-inner">
+                        <div class="timeline-icon bg-success">
+                            <i class="entypo-feather"></i>
+                            <i class="fa fa-play-circle"></i>
+                        </div>
+                        <div class="timeline-label">
+                            <h2><a href="#"><?php echo h($post['contributor']);?></a>
+                                <?php
+                                    //一旦日時型に変換
+                                    $date = strtotime($post['date']);
+                                    //書式を変換
+                                    $date = date('Y/m/d',$date);
+                                ?>
+                                <span style="font-size:20px"><?php echo h($date);?></span>
+                                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&resultid=<?php echo h($post['id']); ?>"><i class="fa fa-pencil-square-o"></i>
+                            </h2>
+                            <p><strong><?php echo h($post['result']);?><strong></br></p>
+                        </div>
+                </article>
+            <?php } ?>
             <article class="timeline-entry begin">
-
                 <div class="timeline-entry-inner">
-
                     <div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">
                         <i class="entypo-flight"></i> +
                     </div>
-
                 </div>
-
             </article>
-
-          </div>
-
+        </div>
         </div>
     </div>
 
@@ -227,6 +230,6 @@ $dbh=null;
 </body>
 </html>
 <?php }catch(Excepton $e){
-  echo "サーバーエラーが生じております。sunfriend2016@gamil.comまでご連絡ください。";
+    echo "サーバーエラーが生じております。sunfriend2016@gamil.comまでご連絡ください。";
 } ?>
 
