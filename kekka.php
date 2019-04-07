@@ -216,11 +216,11 @@ $dbh=null;
                     <div class="timeline-entry-inner">
                         <div class="timeline-icon bg-success">
                             <i class="entypo-feather"></i>
-                            <i class="fa fa-play-circle"></i>
+                            <i class="fa fa-play-circle blue_button"></i>
                         </div>
                         <div class="timeline-label">
                             <h2><a href="#"><?php echo h($post['contributor']);?></a>
-                                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&gameid=<?php echo $gameid; ?>&resultid=<?php echo h($post['id']); ?>" class="green_button"><i class="fa fa-pencil-square-o green_button"></i>
+                                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&gameid=<?php echo $gameid; ?>&resultid=<?php echo h($post['id']); ?>" class="green_button"><i class="fa fa-pencil-square-o blue_button"></i>
                                 <?php
                                     //一旦日時型に変換
                                     $date = strtotime($post['date']);
