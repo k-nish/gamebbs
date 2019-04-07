@@ -7,11 +7,10 @@ session_start();
 $sql = 'SELECT * FROM `secret` WHERE 1';
 $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
 $rec = mysqli_fetch_assoc($stmt);
-$id = $rec['id'];
-$pass = $rec['pass'];
+$login_pass = $rec['pass'];
 
 //ログインチェック
-if ($_SESSION['pass'] != $pass) {
+if ($_SESSION['pass'] != $login_pass) {
   header('Location: http://ut-sunfriend.com/gamebbs/index.php');
 }
 
@@ -52,10 +51,10 @@ $start = max($start,0);
  //編集するための編集元の情報を表示
 if(isset($_GET['action'])&& ($_GET['action']=='edit')) {
     $sql = sprintf('SELECT * FROM `names` WHERE gameid=%d',
-            mysqli_real_escape_string($db,$_GET['id']));
+            mysqli_real_escape_string($db,$_GET['gameid']));
     $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
     $rec = mysqli_fetch_assoc($stmt);
-    $id = $rec['gameid'];
+    $gameid = $rec['gameid'];
     $name = $rec['gamename'];
     $day = $rec['gameday'];
  }
@@ -68,7 +67,7 @@ if(isset($_POST)&&!empty($_POST)){
                 $gname = mb_convert_kana($_POST['gamename'],'sa','UTF-8');
                 $sql = sprintf('UPDATE `names` SET `gamename`="%s",gameday=now() WHERE `gameid`="%d"',
                         mysqli_real_escape_string($db,$gname),
-                        mysqli_real_escape_string($db,$_POST['id']));
+                        mysqli_real_escape_string($db,$_POST['gameid']));
                 $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
 
             }elseif(isset($_POST['gamename'])&&!empty($_POST['gamename'])) {
@@ -83,7 +82,7 @@ if(isset($_POST)&&!empty($_POST)){
                 $stm = mysqli_query($db,$sq) or die(mysqli_error($db));
                 $newid = mysqli_fetch_assoc($stm);
                 //最初の投稿を登録
-                $sqls = sprintf('INSERT INTO `results`SET `result`="%sの実況はじめます!", `years`="sunfriend", `date`=now(), `gameid`=%d',
+                $sqls = sprintf('INSERT INTO `results`SET `result`="%sの実況はじめます!", `contributor`="sunfriend", `date`=now(), `gameid`=%d',
                             mysqli_real_escape_string($db,$gname),
                             mysqli_real_escape_string($db,$newid['gameid']));
                 $stmtt = mysqli_query($db,$sqls) or die(mysqli_error($db));
@@ -101,9 +100,9 @@ $sql = 'SELECT * FROM `names` WHERE 1 ORDER BY `gameid` DESC';
 $stmt = mysqli_query($db,$sql) or die(mysqli_error($db));
 while (1) {
     $rec = mysqli_fetch_assoc($stmt);
-if ($rec == false) {
-    break;
-}
+    if ($rec == false) {
+        break;
+    }
     $sun[] = $rec;
 }
 
@@ -114,9 +113,9 @@ $sq = sprintf('SELECT `g1`.`result`,`g1`.`date`,`g1`.`gameid` FROM `results` as 
 $stmt = mysqli_query($db,$sq) or die(mysqli_error($db));
 while (1) {
     $req = mysqli_fetch_assoc($stmt);
-if ($req == false) {
-    break;
-}
+    if ($req == false) {
+        break;
+    }
     $re[] =$req;
 }
 
@@ -201,7 +200,7 @@ $dbh = null;
       <?php if($name==''){ ?>
       <button type="submit"  class="btn btn-danger col-xs-12" disabled>投稿する</button>
       <?php }elseif($name != ''){?>
-      <input type='hidden' name='id' value='<?php echo "$id";?>'>
+      <input type='hidden' name='gameid' value='<?php echo "$id";?>'>
       <button type="submit"  name='update' class="btn btn-danger col-xs-12" disabled>書き直す</button>
       <?php } ?>
       <br>
@@ -230,14 +229,14 @@ $dbh = null;
         <?php foreach($re as $po) { ?>
         <article class="timeline-entry">
             <div class="timeline-entry-inner">
-                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?id=<?php echo $po['gameid']; ?>">
+                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?gameid=<?php echo $po['gameid']; ?>">
                 <div class="timeline-icon bg-info">
                     <i class="entypo-feather"></i>
                     <i class="fa fa-play-circle"></i>
                 </div>
 
                 <div class="timeline-label">
-                    <h2><a href="kekka.php?id=<?php echo h($po['gameid']); ?>">
+                    <h2><a href="kekka.php?gameid=<?php echo h($po['gameid']); ?>">
                     <?php foreach ($sun as $post) {
                     if($post['gameid'] == $po['gameid']){
                     if($post['gamename'] != ''){?>
@@ -252,8 +251,8 @@ $dbh = null;
                           $gameday = date('Y/m/d',$gameday);
                       ?>
                       <span style="font-size:20px"><?php echo h($gameday);?></span>
-                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php?action=edit&id=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
-                      <p><a href="http://ut-sunfriend.com/gamebbs/kekka.php?id=<?php echo h($po['gameid']); ?>">最新投稿:<strong><?php echo h($po['result']); ?><strong></p>
+                      <a href="http://ut-sunfriend.com/gamebbs/bbs.php?action=edit&gameid=<?php echo h($po['gameid']); ?>"><i class="fa fa-pencil-square-o"></i>
+                      <p><a href="http://ut-sunfriend.com/gamebbs/kekka.php?gameid=<?php echo h($po['gameid']); ?>">最新投稿:<strong><?php echo h($po['result']); ?><strong></p>
                     </h2>
             </div>
 
