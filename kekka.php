@@ -220,7 +220,6 @@ $dbh=null;
                         </div>
                         <div class="timeline-label">
                             <h2><a href="#"><?php echo h($post['contributor']);?></a>
-                                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&gameid=<?php echo $gameid; ?>&resultid=<?php echo h($post['id']); ?>"><i class="fa fa-pencil-square-o blue_button"></i>
                                 <?php
                                     //一旦日時型に変換
                                     $date = strtotime($post['date']);
@@ -228,7 +227,9 @@ $dbh=null;
                                     $date = date('Y/m/d H:i:s',$date);
                                 ?>
                                 <span style="font-size:20px"><?php echo h($date);?></span>
-                                <a href="#" onclick="destroy(<?php echo h($post['id']);?>)"><i class="fa fa-trash-o red_button"></i></a>
+                                <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&gameid=<?php echo $gameid; ?>&resultid=<?php echo h($post['id']); ?>"><i class="fa fa-pencil-square-o bg-info"></i></a>
+                                // 削除ボタンを使う場合は下の行のコメントアウトを外す
+                                <!-- <a href="#" onclick="destroy(<?php echo h($post['id']);?>)"><i class="fa fa-trash-o red_button"></i></a> -->
                             </h2>
                             <p><strong><?php echo h($post['result']);?><strong></br></p>
                         </div>
