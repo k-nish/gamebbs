@@ -228,7 +228,7 @@ $dbh=null;
                                 ?>
                                 <span style="font-size:20px"><?php echo h($date);?></span>
                                 <a href="http://ut-sunfriend.com/gamebbs/kekka.php?action=edit&gameid=<?php echo $gameid; ?>&resultid=<?php echo h($post['id']); ?>"><i class="fa fa-pencil-square-o bg-info"></i></a>
-                                // 削除ボタンを使う場合は下の行のコメントアウトを外す
+                                <!-- 削除ボタンを使う場合は下の行のコメントアウトを外す -->
                                 <!-- <a href="#" onclick="destroy(<?php echo h($post['id']);?>)"><i class="fa fa-trash-o red_button"></i></a> -->
                             </h2>
                             <p><strong><?php echo h($post['result']);?><strong></br></p>
